@@ -28,7 +28,7 @@ sub write_annotation {
         $gene->local_id,
         $gene->label,
         $ann->target->id,
-        '',    # qualifiers
+        $self->fetch_qualifiers($ann),    # qualifiers
         join( '|',
             map {$_}
                 ( @{ $ann->provenance->xrefs || [] }, $ann->provenance->id )
@@ -36,7 +36,7 @@ sub write_annotation {
         $ann->evidence->ev_type->id,
         $ann->evidence->with_str,        # with,
         _aspect( $ann->target ),         # aspect
-        '',                              # gene name
+        $ann->description ? $ann->description : '',                              # gene name
         $self->fetch_synonyms($gene),    # syn
         $gene->gp_type->id,              #
         $gene->taxon->id,                #
@@ -47,6 +47,19 @@ sub write_annotation {
     );
     $self->printrow( \@vals );
     return;
+}
+
+sub fetch_qualifiers {
+	my ($self,  $ann) = @_;
+	my @qual;
+	push @qual, 'NOT' if $ann->negated;
+	if (defined $ann->qualifier_list) {
+		push @qual, $_->id for @{$ann->qualifier_list};
+	}
+	if (@qual) {
+		return $qual[0] if @qual == 1;
+		return join('|', @qual);
+	}
 }
 
 sub fetch_synonyms {
