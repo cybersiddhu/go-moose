@@ -36,7 +36,7 @@ sub write_annotation {
         $ann->evidence->ev_type->id,
         $ann->evidence->with_str,        # with,
         _aspect( $ann->target ),         # aspect
-        $ann->description ? $ann->description : '',                              # gene name
+        $ann->description ? $ann->description : '',# gene name
         $self->fetch_synonyms($gene),    # syn
         $gene->gp_type->id,              #
         $gene->taxon->id,                #
