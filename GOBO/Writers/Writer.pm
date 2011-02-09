@@ -140,6 +140,8 @@ sub nl {
     return;
 }
 
+with 'GOBO::Writers::ChunkWriter';
+
 __PACKAGE__->meta->make_immutable;
 
 1;
