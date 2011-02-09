@@ -10,7 +10,7 @@ has fh => (
     predicate => 'has_fh'
 );    #, coerce=>1);
 has file => ( is => 'rw', isa => 'Str', trigger => \&init_fh );
-has graph => ( is => 'rw', isa => 'GOBO::Graph' );
+has graph => ( is => 'rw', isa => 'GOBO::Graph',  clearer => 'clear_graph' );
 
 ## indexes to use for the different types of statement
 has 'statement_ix'  => ( is => 'rw', isa => 'Str', default => 'statements' );
@@ -139,8 +139,6 @@ sub nl {
     print $fh "\n";
     return;
 }
-
-with 'GOBO::Writers::ChunkWriter';
 
 __PACKAGE__->meta->make_immutable;
 

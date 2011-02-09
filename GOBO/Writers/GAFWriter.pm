@@ -14,7 +14,6 @@ sub write_header {
     if ( $self->has_header_data ) {
         $self->fh->print( '! ' . $_ . "\n" ) for $self->get_header_data;
     }
-    return;
 }
 
 sub write_annotation {
@@ -27,8 +26,8 @@ sub write_annotation {
         $gene->id_db,
         $gene->local_id,
         $gene->label,
-        $ann->target->id,
         $self->fetch_qualifiers($ann),    # qualifiers
+        $ann->target->id,
         join( '|',
             map {$_}
                 ( @{ $ann->provenance->xrefs || [] }, $ann->provenance->id )
@@ -60,6 +59,7 @@ sub fetch_qualifiers {
 		return $qual[0] if @qual == 1;
 		return join('|', @qual);
 	}
+	return '';
 }
 
 sub fetch_synonyms {
@@ -91,6 +91,8 @@ sub _aspect {
     else                                  {'-'}
 
 }
+
+with 'GOBO::Writers::ChunkWriter';
 
 __PACKAGE__->meta->make_immutable;
 
