@@ -1,2 +1,17 @@
-Mojolicious-Plugin-ActionCache-*
-.build/
+#Perl's build specific stuff
+Build
+_blib
+*blib*
+_build
+MANIFEST*
+MYMETA*
+META*
+tmp
+log
+*DS_Store*
+data
+obo
+Makefile
+
+#exclude Build.PL
+!Build.PL
