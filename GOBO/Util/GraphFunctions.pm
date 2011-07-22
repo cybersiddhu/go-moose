@@ -88,17 +88,7 @@ sub slim_annotations {
 	$annot->transitive_over( $graph->relation_noderef('part_of') );
 	$not_annot->propagates_over_is_a(0);
 
-=insert
-	## this file contains the 'annotated_to' and 'annotated_to_NOT' relations
-	my $parser = new GOBO::Parsers::OBOParser(file=>'t/data/annotation_relations.obo',
-		graph => new GOBO::Graph,
-		body => { parse_only => { typedef => '*' } },
-	);
-	$parser->parse;
-	foreach (@{$parser->graph->relations})
-	{	$graph->add_relation($_);
-	}
-=cut
+
 	## check that we have an overlap between the terms in the graph and those in
 	## the GAF file
 	my @term_ids = map {$_->id} grep { ! $_->obsolete } @{$graph->terms};
@@ -653,19 +643,18 @@ sub topological_sort {
 	my @sorted;   # Empty list that will contain the sorted nodes
 	my @leafy;    # Set of all nodes with no incoming edges
 
-=algorithm:
-while leafy is non-empty do
-	remove a node n from leafy
-	insert n into sorted
-	for each node m with an edge e from n to m do
-		remove edge e from the graph
-		if m has no other incoming edges then
-			insert m into leafy
-if graph has edges then
-	output error message (graph has at least one cycle)
-else
-	output message (proposed topologically sorted order: sorted)
-=cut
+#algorithm:
+#while leafy is non-empty do
+#	remove a node n from leafy
+#	insert n into sorted
+#	for each node m with an edge e from n to m do
+#		remove edge e from the graph
+#		if m has no other incoming edges then
+#			insert m into leafy
+#if graph has edges then
+#	output error message (graph has at least one cycle)
+#else
+#	output message (proposed topologically sorted order: sorted)
 
 #	print STDERR "input data: " . Dumper($d);
 
