@@ -107,7 +107,7 @@ subtype 'GOBO::Indexes::StatementIx'
 	=> where { $_->isa('GOBO::Indexes::StatementRefIndex') || $_->isa('GOBO::Indexes::StatementObjectIndex') };
 
 subtype 'GOBO::Parsers::Parser::ProtoFileHandle'
-	=> as class_type('FileHandle');
+	=> as 'FileHandle';
 
 coerce 'GOBO::Parsers::Parser::ProtoFileHandle'
 	=> from 'Str'
